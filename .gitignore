@@ -1,3 +1,10 @@
+# project-specific
+log
+upload
+settings.py
+
+# by github
+#
 *.py[cod]
 
 # C extensions
