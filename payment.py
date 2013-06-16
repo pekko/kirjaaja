@@ -40,7 +40,8 @@ class Payment(object):
         self.hoax_init()
 
     def is_verkkomaksut(self):
-        return "verkkomaksut" in self.vastapuoli.lower() and self.summa > 0
+        vasta = self.vastapuoli.lower()
+        return ("verkkomaksut" in vasta or "paytrail" in vasta) and self.summa > 0
 
     def is_myynti(self):
         return self.summa > 0

@@ -96,6 +96,6 @@ class Sort:
 
     def sort_complex_rules(self, payment):
         """ Koodissa olevat säännöt. """
-        if "SUOMEN VERKKOMAKSUT" in payment.vastapuoli and payment.summa < 0:
+        if ("SUOMEN VERKKOMAKSUT" in payment.vastapuoli or "PAYTRAIL" in payment.vastapuoli) and payment.summa < 0:
             return settings.accounts.pankkikulut
         return None
