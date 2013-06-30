@@ -39,7 +39,8 @@ def get_payments(filename):
             vat, 
             amount, 
             provision, 
-            payment_amount, foo) = r.replace('"', '').split(";")
+            transaction,
+            payment_amount, _) = r.replace('"', '').split(";")
         
         except ValueError:
             (rowtype, 
