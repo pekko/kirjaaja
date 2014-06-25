@@ -77,7 +77,7 @@ def get_payments(filename):
 
             batches[-1]['batch'].append({
                 'account' : account,
-                'amount' : float(amount.replace(",",".")),
+                'amount' : float(payment_amount.replace(",",".")),
                 'description' : description
             })
         else:
