@@ -98,10 +98,11 @@ def mark_paid(payment_id, summa, paid_date):
     """
 
     if summa != get_amount(payment_id):
-        # ISO PAHA VIRHE. KUOLE!
+        # summat ei täsmänny. Voi olla että on maksettu esim kahdessa osassa? tai sitten ISO PAHA VIRHE
         log.msg("Maksun %d summa on virheellinen: %.2f eur, oikeasti %.2f eur" % (payment_id, summa, get_amount(payment_id)), "WARN")
-        raise Exception("Maksun %d summa on virheellinen: %.2f eur, oikeasti %.2f eur" % (payment_id, summa, get_amount(payment_id)))
-        return False
+        # mutta ei silti kaaduta, mut pitää tarkistaa käsin
+        #raise Exception("Maksun %d summa on virheellinen: %.2f eur, oikeasti %.2f eur" % (payment_id, summa, get_amount(payment_id)))
+        #return False
 
     # merkataan maksetuksi
     # TODO
