@@ -43,7 +43,7 @@ def tilitin(data):
 		conn.set_client_encoding('UTF8')
 		cur = conn.cursor()
 
-		cur.execute("SELECT MAX(number) FROM document WHERE number < 1000") # TODO perkele. vituiksi meni. yli tonnin kirjaukset (toinen tili) tehdaan manuaalisesti.
+		cur.execute("SELECT MAX(number) FROM document WHERE period_id = %s" % (settings.period_id,) )
 		document_number = cur.fetchone()
 		if document_number[0] is None:
 			document_number = 1
