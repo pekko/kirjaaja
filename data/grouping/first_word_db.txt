@@ -22,6 +22,8 @@
 4750	palkka
 5000	kokouskulut
 5000	kokous
+5050	vakuutuskulut
+5050	vakuutus
 5250	asusteet
 5300	cd
 5300	dvd
@@ -58,7 +60,7 @@
 7250	pankkikulut
 7250	yrityksen
 7350	elospeksi
-7400	poistot
+7450	poistot
 7475	varaukset
 7500	muut
 7600	catering
