@@ -23,7 +23,7 @@ class mysql:
 class psql:
 	host = "pecko.dy.fi"
 	user = "speksi-rahis"
-	passwd = "kassa!masiina"
+	passwd = ""
 
 	if MODE == "prod":
 		db = "speksi-rahis"
