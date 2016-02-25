@@ -45,6 +45,10 @@ class accounts:
 
 	pankkikulut = 7250
 
+class lippukauppa:
+	url = "http://www.teekkarispeksi.fi/kauppa/admin-api/kirjaaja"
+	auth = ("user", "password") # käytä intran tunnuksia, lippukauppa-admin ryhmällä
+
 dir="/rdata/www/speksi/var/script/kirjaaja/"
 period_id = 1
 year = 2013
