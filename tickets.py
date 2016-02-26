@@ -2,20 +2,18 @@
 # *-* encoding: utf-8 *-*
 
 import settings
-import requests
+import urllib2, json, base64
 
 order_ids = None
 
 def get_ids():
     global order_ids
     if order_ids is None:
-        response = requests.get(settings.lippukauppa.url, auth=settings.lippukauppa.auth)
-        if response.status_code != 200:
-            raise Exception("Ongelma Lippukauppa-API:n kanssa, ei skulaa")
-        if hasattr(response.json, '__call__'):
-            order_ids = response.json() # a function on my python..
-        else:
-            order_ids = response.json # is a key on your (kapsi's) python
+        request = urllib2.Request(settings.lippukauppa.url)
+        b64 = base64.encodestring('%s:%s' % settings.lippukauppa.auth).replace('\n', '')
+        request.add_header("Authorization", "Basic %s" % b64)
+        response = urllib2.urlopen(request)
+        order_ids = json.load(response)
 
 def is_ticket(order_id):
     # first is a special case for fall 2015 NääsPeksi...
