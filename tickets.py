@@ -12,7 +12,10 @@ def get_ids():
         response = requests.get(settings.lippukauppa.url, auth=settings.lippukauppa.auth)
         if response.status_code != 200:
             raise Exception("Ongelma Lippukauppa-API:n kanssa, ei skulaa")
-        order_ids = response.json()
+        if hasattr(response.json, '__call__'):
+            order_ids = response.json() # a function on my python..
+        else:
+            order_ids = response.json # is a key on your (kapsi's) python
 
 def is_ticket(order_id):
     # first is a special case for fall 2015 NääsPeksi...
