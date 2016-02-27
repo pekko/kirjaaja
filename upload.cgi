@@ -1,4 +1,4 @@
-#!/rdata/www/speksi/local/bin/python
+#!/usr/bin/python
 # *-* encoding: latin-1 *-*
 
 import cgi
@@ -8,14 +8,13 @@ import os
 import psycopg2
 import sys
 
-sys.path = ['', '/rdata/www/speksi/local/lib/python2.4/site-packages/Jinja2-2.6-py2.4.egg', '/rdata/www/speksi/local/lib/python2.5/site-packages/MySQL_python-1.2.3-py2.5-linux-i686.egg', '/rdata/www/speksi/local/lib/python2.5/site-packages/unicodecsv-0.9.2-py2.5.egg', '/rdata/www/speksi/local/lib/python2.4/site-packages', '/rdata/www/speksi/local/lib/python2.5/site-packages', '/usr/lib/python25.zip', '/usr/lib/python2.5', '/usr/lib/python2.5/plat-linux2', '/usr/lib/python2.5/lib-tk', '/usr/lib/python2.5/lib-dynload', '/usr/lib/python2.5/site-packages', '/usr/lib/python2.5/site-packages/PIL']
-sys.path.append('/rdata/www/speksi/var/script/')
+sys.path.append('/home/users/speksi/scripts/kirjaaja/')
 
 from kirjaaja import settings
 
 cgitb.enable()
 if settings.MODE == 'prod':
-	UPLOAD_PATH = '/rdata/www/speksi/var/script/kirjaaja/upload'
+	UPLOAD_PATH = settings.dir + 'upload'
 else:
 	UPLOAD_PATH = '/rdata/www/speksi/var/script/kirjaaja/upload/test'
 
@@ -49,8 +48,8 @@ def run_kirjaaja(tiliote_fn, tilitysraportti_fn):
 	from kirjaaja import kirjaaja
 
 	print "Content-type: text/plain\n\n"
-	kirjaaja.kirjaaja(tiliote_fn, tilitysraportti_fn)
-	logfile = "/rdata/www/speksi/var/script/kirjaaja/log/%s.log" % (datetime.date.today())
+	kirjaaja(tiliote_fn, tilitysraportti_fn)
+	logfile = settings.dir + "log/%s.log" % (datetime.date.today())
 	print """
 Kirjaaja-ajo OK
 ===============
