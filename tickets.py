@@ -2,6 +2,7 @@
 # *-* encoding: utf-8 *-*
 
 import settings
+import log
 import urllib2, json, base64
 
 order_ids = None
@@ -29,17 +30,21 @@ def is_kiertue(order_id):
     return (order_ids[order_id]["city"] != "Helsinki" and order_ids[order_id]["city"] != "Espoo")
 
 def account(order_id):
-    if is_naaspeksi(order_id):
-        return settings.accounts.naaspeksi
-    elif is_kiertue(order_id):
-        return settings.accounts.kiertuetuotot
-
+    try:
+        if is_naaspeksi(order_id):
+            return settings.accounts.naaspeksi
+        elif is_kiertue(order_id):
+            return settings.accounts.kiertuetuotot
+    except KeyError:
+        log.msg("Tilausta %s ei löytynyt tietokannasta, oletetaan tiliksi %s" % settings.accounts.lipunmyynti)
     return settings.accounts.lipunmyynti
 
 def description(order_id):
-    if is_naaspeksi(order_id):
-        return "Lipunmyyntitulo, NääsPeksi"
-    elif is_kiertue(order_id):
-        return "Lipunmyyntitulo, kiertue, " + order_ids[order_id]["city"]
-
+    try:
+        if is_naaspeksi(order_id):
+            return "Lipunmyyntitulo, NääsPeksi"
+        elif is_kiertue(order_id):
+            return "Lipunmyyntitulo, kiertue, " + order_ids[order_id]["city"]
+    except KeyError:
+        log.msg("Tilausta %s ei löytynyt tietokannasta, oletetaan kuvaus Lipunmyyntituloksi" % order_id)
     return "Lipunmyyntitulo"
