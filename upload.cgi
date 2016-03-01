@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# *-* encoding: latin-1 *-*
+# *-* encoding: utf-8 *-*
 
 import cgi
 import cgitb
@@ -47,30 +47,50 @@ def last_run():
 def run_kirjaaja(tiliote_fn, tilitysraportti_fn):
 	from kirjaaja import kirjaaja
 
-	print "Content-type: text/plain\n\n"
 	kirjaaja(tiliote_fn, tilitysraportti_fn)
 	logfile = settings.dir + "log/%s.log" % (datetime.date.today())
-	print """
+
+	print """Content-type: text/html
+
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+        <title>Kirjaaja - Loki</title>
+        <style type="text/css">
+        	date {
+                        font-weight: bold;
+                }
+        </style>
+</head>
+
+<body>
+<pre>
 Kirjaaja-ajo OK
 ===============
 
 Ajo on onnistunut.
 
-Alla on logitiedosto t‰lt‰ p‰iv‰lt‰. Varmista, ett‰ merkinn‰t ovat oikein.
-Korjaa tarvittaessa k‰sin Kirjaaja-ohjelmaan.
+Alla on logitiedosto t√§lt√§ p√§iv√§lt√§. Varmista, ett√§ merkinn√§t ovat oikein.
+Korjaa tarvittaessa k√§sin Kirjaaja-ohjelmaan.
 
 ------------------------------------------------------------------------------
 
 """
 
 	print open(logfile).read()
+	print """
+</pre>
+</body>
+</html>
+"""
 	sys.exit(0)
 
 def main():
 	form = cgi.FieldStorage()
 
 	run_kirjaaja_instructions = """
-		<input type="button" value="Aja" disabled> Siirr‰ tiedostot ensin...
+		<input type="button" value="Aja" disabled> Siirr√§ tiedostot ensin...
 	"""
 
 	if 'tiliote' in form and 'tilitysraportti' in form:
@@ -99,6 +119,8 @@ def main():
 	<!doctype html>
 	<html>
 	<head>
+		<meta charset="utf-8">
+		<title>Kirjaaja</title>
 		<style type="text/css">
 		date {
 			font-weight: bold;
@@ -108,22 +130,22 @@ def main():
 
 	<body>
 		<form enctype="multipart/form-data" action="" method="post">
-		<h1>Kirjaaja: Er‰ajo</h1>
+		<h1>Kirjaaja: Er√§ajo</h1>
 		<p>
-			T‰n‰‰n on <date>%(today)s</date>, eli voidaan hakea tapahtumat <date>%(stop_date)s</date> asti.<br>
-			Kirjanpidon viimeisin merkint‰ on <date>%(previous_run)s</date>.<br>
-			K‰ytˆss‰ <b>%(environment)symp‰ristˆ</b>.
+			T√§n√§√§n on <date>%(today)s</date>, eli voidaan hakea tapahtumat <date>%(stop_date)s</date> asti.<br>
+			Kirjanpidon viimeisin merkint√§ on <date>%(previous_run)s</date>.<br>
+			K√§yt√∂ss√§ <b>%(environment)symp√§rist√∂</b>.
 		</p>
 		
 		<h2>Toimintaohjeet</h2>
 
 		<h3>1. Hae tiliotetiedosto</h3>
 		<ol>
-			<li>Kirjaudu Nordean verkkopankkiin henkilˆkohtaisilla tunnuksillasi.</li>
-			<li>Valitse Speksin k‰yttˆtili (FI47 1112 3000 3582 80) -> Tapahtumaluettelo</li>
-			<li>Varmista, ett‰ Tili-valikossa todella on valittu oikea tili</li>
+			<li>Kirjaudu Nordean verkkopankkiin henkil√∂kohtaisilla tunnuksillasi.</li>
+			<li>Valitse Speksin k√§ytt√∂tili (FI47 1112 3000 3582 80) -> Tapahtumaluettelo</li>
+			<li>Varmista, ett√§ Tili-valikossa todella on valittu oikea tili</li>
 			<li>Hae tulosteet ajalta <date>%(start_date)s</date> - <date>%(stop_date)s</date></li>
-			<li>Valitse t‰st‰ ‰sken hakemasi tiedosto:
+			<li>Valitse t√§st√§ √§sken hakemasi tiedosto:
 				<input type="file" name="tiliote">
 			</li>
 		</ol>
@@ -132,16 +154,16 @@ def main():
 		<ol>
 			<li>Kirjaudu <a href="https://ssl.verkkomaksut.fi/kauppiaspaneeli/" target="_blank">Verkkomaksujen kauppiaspaneeliin</a> (tunnukset jostain)</li>
 			<li>Valitse Tilitykset -> Kirjanpitoraportti (<a href="https://ssl.verkkomaksut.fi/kauppiaspaneeli/batch/accounting" target="_blank">pikalinkki</a>)</li>
-			<li>Syˆt‰ aikav‰liksi <date>%(start_date)s</date> - <date>%(stop_date)s</date> ja valitse "Hae"</li>
+			<li>Sy√∂t√§ aikav√§liksi <date>%(start_date)s</date> - <date>%(stop_date)s</date> ja valitse "Hae"</li>
 			<li>Valitse "Lataa kirjanpitoraportti CSV-tiedostona" ja tallenna kyseinen tiedosto</li>
-			<li>Vaitse t‰st‰ ‰sken hakemasi tiedosto:
+			<li>Vaitse t√§st√§ √§sken hakemasi tiedosto:
 				<input type="file" name="tilitysraportti">
 			</li>
 		</ol>
 
-		<h3>3. Siirr‰ tiedostot palvelimelle</h3>
+		<h3>3. Siirr√§ tiedostot palvelimelle</h3>
 		<ol>
-			<li>Klikkaa t‰st‰: <input type="submit" value="Upload"></li>
+			<li>Klikkaa t√§st√§: <input type="submit" value="Upload"></li>
 		</ol>
 		</form>
 
@@ -149,16 +171,16 @@ def main():
 		<h3>4. Aja Kirjaaja</h3>
 		<ol>
 			<li>%(run_kirjaaja)s</li>
-			<li>Jos ok, tarkista viel‰ k‰sin.</li>
-			<li>Jos ei onnistu, selvit‰ virheiden syy ja palauta tarvittaessa backup (t‰h‰n tarvitset apua).</li>
+			<li>Jos ok, tarkista viel√§ k√§sin.</li>
+			<li>Jos ei onnistu, selvit√§ virheiden syy ja palauta tarvittaessa backup (t√§h√§n tarvitset apua).</li>
 		</ol>
 		</form>
 
 		<h2>Ongelmatilanteissa</h2>
 		<ul>
 			<li>Koodi: <pre>nodeta:~/var/script/kirjaaja/</pre></li>
-			<li>Tallennettu svn:‰‰n, k‰yt‰ sit‰ oikein!</li>
-			<li>Saa h‰irit‰: Pekko Lipsanen / pekko.lipsanen a iki.fi / 040 861 0631</li>
+			<li>Tallennettu svn:√§√§n, k√§yt√§ sit√§ oikein!</li>
+			<li>Saa h√§irit√§: Pekko Lipsanen / pekko.lipsanen a iki.fi / 040 861 0631</li>
 		</ul>
 	</body>
 	</html>

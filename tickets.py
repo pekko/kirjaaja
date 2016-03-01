@@ -36,7 +36,7 @@ def account(order_id):
         elif is_kiertue(order_id):
             return settings.accounts.kiertuetuotot
     except KeyError:
-        log.msg("Tilausta %s ei löytynyt tietokannasta, oletetaan tiliksi %s" % settings.accounts.lipunmyynti)
+        log.msg("Tilausta %s ei löytynyt tietokannasta, oletetaan tiliksi %s" % (order_id, settings.accounts.lipunmyynti))
     return settings.accounts.lipunmyynti
 
 def description(order_id):

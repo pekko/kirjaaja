@@ -1,7 +1,8 @@
 from datetime import datetime
+import settings
 
 today = datetime.today()
-fn = "/rdata/www/speksi/var/script/kirjaaja/log/%04d-%02d-%02d.log" % (today.year, today.month, today.day)
+fn = settings.dir + "log/%04d-%02d-%02d.log" % (today.year, today.month, today.day)
 
 class Message(object):
 	def __init__(self, msg, level="INFO"):
