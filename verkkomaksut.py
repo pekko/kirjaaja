@@ -40,8 +40,8 @@ def get_payments(filename):
             amount, 
             provision, 
             transaction,
-            payment_amount, _) = r.replace('"', '').split(";")
-        
+            payment_amount, _) = r.replace('"', '').replace('=', '').split(";")
+
         except ValueError:
             (rowtype, 
             date, 
@@ -49,7 +49,7 @@ def get_payments(filename):
             order_id, 
             name, 
             batch_amount, 
-            batch_amount_ex_vat) = r.rstrip().replace('"', '').split(";")
+            batch_amount_ex_vat) = r.rstrip().replace('"', '').replace('=', '').split(";")
 
         if rowtype == "TILITYS":
             (d, m, y) = date.split(".")
